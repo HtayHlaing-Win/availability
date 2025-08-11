@@ -1602,7 +1602,7 @@
                     </div>
                     <div class="day-column">
                         <div class="day-header">Saturday<div class="day-date">Oct 25</div></div>
-                                               <div class="day-content">
+                            <div class="day-content">
                             <div class="free-time">🎉 Weekend<br>Fully Available</div>
                         </div>
                     </div>
@@ -2039,3 +2039,22 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
+<!-- Somewhere in your content -->
+<h2>Scan to visit my GitHub Pages site</h2>
+<div id="qrcode"></div>
+<!-- QRCode.js library -->
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<script>
+  // Replace with your actual link
+  var myURL = "https://htayhlaing-win.github.io/availability/";
+  
+  new QRCode(document.getElementById("qrcode"), {
+    text: myURL,
+    width: 256,
+    height: 256,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+  });
+</script>
