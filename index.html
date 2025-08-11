@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Timetables</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>My Timetables</h1>
+      <p class="subtitle">Quick view of your uploaded availability & class timetables.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <input id="search" type="search" placeholder="Search subject, day, or location..." />
+      <label for="source">Show:</label>
+      <select id="source">
+        <option value="both">Both timetables</option>
+        <option value="a1">Availability 1</option>
+        <option value="a2">Availability 2</option>
+      </select>
+    </section>
+
+    <section class="timetable" id="timetable-a1">
+      <div class="timetable-header">
+        <h2>Availability 1</h2>
+        <div class="actions">
+          <a class="btn" href="assets/availability1.pdf" target="_blank" rel="noopener">Open PDF</a>
+          <a class="btn ghost" href="assets/availability1.pdf" download>Download</a>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Activity</th>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Campus / Location</th>
+              <th>Staff</th>
+              <th>Duration / Weeks</th>
+            </tr>
+          </thead>
+          <tbody id="a1-body">
+            <!-- Rows injected by script -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="timetable" id="timetable-a2">
+      <div class="timetable-header">
+        <h2>Availability 2</h2>
+        <div class="actions">
+          <a class="btn" href="assets/availability2.pdf" target="_blank" rel="noopener">Open PDF</a>
+          <a class="btn ghost" href="assets/availability2.pdf" download>Download</a>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Activity</th>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Campus / Location</th>
+              <th>Staff</th>
+              <th>Duration / Weeks</th>
+            </tr>
+          </thead>
+          <tbody id="a2-body">
+            <!-- Rows injected by script -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>Generated site • Put your PDF files in <code>assets/</code> and push to GitHub.</small>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>
