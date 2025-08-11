@@ -346,6 +346,81 @@
             border-top-color: #2c3e50;
             z-index: 10;
         }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: #e0e0e0;
+        }
+        body.dark-mode .container {
+            background: rgba(34, 34, 34, 0.97);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        body.dark-mode .header {
+            background: linear-gradient(135deg, #232526, #414345);
+            color: #fff;
+        }
+        body.dark-mode .week-header {
+            background: linear-gradient(135deg, #232526, #414345);
+            color: #fff;
+        }
+        body.dark-mode .day-column {
+            background: #232526;
+            color: #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.18);
+        }
+        body.dark-mode .day-header {
+            background: #111418;
+            color: #fff;
+        }
+        body.dark-mode .class-block {
+            background: #2d2d2d !important;
+            color: #e0e0e0;
+            border-color: #444 !important;
+        }
+        body.dark-mode .class-block::before {
+            filter: grayscale(0.2) brightness(0.8);
+        }
+        body.dark-mode .free-time {
+            background: linear-gradient(135deg, #232526, #414345);
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+        body.dark-mode .week-stats {
+            background: rgba(34, 34, 34, 0.97);
+        }
+        body.dark-mode .stat-item {
+            background: linear-gradient(135deg, #232526, #414345);
+            color: #e0e0e0;
+        }
+        body.dark-mode .stat-label {
+            color: #b0b0b0;
+        }
+        body.dark-mode .stat-value {
+            color: #fff;
+        }
+        body.dark-mode .nav-btn {
+            background: #444;
+            color: #fff;
+        }
+        body.dark-mode .nav-btn.active {
+            background: #e74c3c;
+            color: #fff;
+        }
+        body.dark-mode .nav-btn:hover {
+            background: #666;
+        }
+        body.dark-mode .class-type {
+            background: rgba(44, 62, 80, 0.7);
+            color: #b0b0b0;
+        }
+        body.dark-mode .class-block[data-tooltip]:hover::after {
+            background: #111418;
+            color: #fff;
+        }
+        body.dark-mode .class-block[data-tooltip]:hover::before {
+            border-top-color: #111418;
+        }
     </style>
 </head>
 <body>
@@ -353,6 +428,7 @@
         <div class="header">
             <h1>📅 My Weekly Schedule & Availability</h1>
             <p>Current Victoria University Sydney Student</p>
+            <button id="darkModeToggle" style="margin-top:20px;padding:8px 20px;border-radius:20px;border:none;cursor:pointer;font-weight:600;background:#232526;color:#fff;transition:background 0.3s;">🌙 Dark Mode</button>
         </div>
 
         <div class="content">
@@ -1517,7 +1593,7 @@
                     </div>
                     <div class="day-column">
                         <div class="day-header">Saturday<div class="day-date">Oct 25</div></div>
-                        <div class="day-content">
+                                               <div class="day-content">
                             <div class="free-time">🎉 Weekend<br>Fully Available</div>
                         </div>
                     </div>
@@ -1648,6 +1724,23 @@ function showWeek(weekId, btn) {
     // Add active to clicked button
     if (btn) btn.classList.add('active');
 }
+
+// Dark mode toggle logic
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('darkModeToggle');
+    toggleBtn.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        if(document.body.classList.contains('dark-mode')) {
+            toggleBtn.textContent = '☀️ Light Mode';
+            toggleBtn.style.background = '#f1c40f';
+            toggleBtn.style.color = '#232526';
+        } else {
+            toggleBtn.textContent = '🌙 Dark Mode';
+            toggleBtn.style.background = '#232526';
+            toggleBtn.style.color = '#fff';
+        }
+    });
+});
 </script>
 </body>
 </html>
