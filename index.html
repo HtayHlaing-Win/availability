@@ -1,95 +1,416 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Timetables</title>
-  <link rel="stylesheet" href="./styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Htay's Availability Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .period-section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid;
+        }
+
+        .period1 { border-left-color: #3498db; }
+        .period2 { border-left-color: #e74c3c; }
+        .period3 { border-left-color: #f39c12; }
+        .period4 { border-left-color: #9b59b6; }
+
+        .period-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .period-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .period1 .period-icon { background: #3498db; }
+        .period2 .period-icon { background: #e74c3c; }
+        .period3 .period-icon { background: #f39c12; }
+        .period4 .period-icon { background: #9b59b6; }
+
+        .period-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .period-dates {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-left: auto;
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .subject-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .subject-code {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid;
+        }
+
+        .class-schedule { border-left-color: #27ae60; }
+        .lab-schedule { border-left-color: #f39c12; }
+
+        .day-time {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .duration {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            background: #f1f2f6;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .availability-note {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .availability-note h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .period-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .period-dates {
+                margin-left: 0;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="site-header">
     <div class="container">
-      <h1>My Timetables</h1>
-      <p class="subtitle">Quick view of your uploaded availability & class timetables.</p>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="controls">
-      <input id="search" type="search" placeholder="Search subject, day, or location..." />
-      <label for="source">Show:</label>
-      <select id="source">
-        <option value="both">Both timetables</option>
-        <option value="a1">Availability 1</option>
-        <option value="a2">Availability 2</option>
-      </select>
-    </section>
-
-    <section class="timetable" id="timetable-a1">
-      <div class="timetable-header">
-        <h2>Availability 1</h2>
-        <div class="actions">
-          <a class="btn" href="assets/availability1.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <a class="btn ghost" href="assets/availability1.pdf" download>Download</a>
+        <div class="header">
+            <h1>📅 My Class Schedule & Availability</h1>
+            <p>Victoria University Sydney - Network Information Technology</p>
         </div>
-      </div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Subject</th>
-              <th>Activity</th>
-              <th>Day</th>
-              <th>Time</th>
-              <th>Campus / Location</th>
-              <th>Staff</th>
-              <th>Duration / Weeks</th>
-            </tr>
-          </thead>
-          <tbody id="a1-body">
-            <!-- Rows injected by script -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+        <div class="content">
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #27ae60;"></div>
+                    <span>Class Sessions</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f39c12;"></div>
+                    <span>PC Lab Sessions</span>
+                </div>
+            </div>
 
-    <section class="timetable" id="timetable-a2">
-      <div class="timetable-header">
-        <h2>Availability 2</h2>
-        <div class="actions">
-          <a class="btn" href="assets/availability2.pdf" target="_blank" rel="noopener">Open PDF</a>
-          <a class="btn ghost" href="assets/availability2.pdf" download>Download</a>
+            <!-- Period 1: Object Oriented Programming -->
+            <div class="period-section period1">
+                <div class="period-header">
+                    <div class="period-icon">P1</div>
+                    <div class="period-title">Period 1: Object Oriented Programming</div>
+                    <div class="period-dates">July 28 - August 20, 2025</div>
+                </div>
+                
+                <div class="schedule-grid">
+                    <div class="subject-card">
+                        <div class="subject-code">NIT2112_SY_H2B1_IP</div>
+                        <div class="subject-name">Object Oriented Programming</div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Monday 1:00 PM - 4:00 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Wednesday 1:00 PM - 4:00 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Thursday 1:00 PM - 4:00 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Monday 4:00 PM - 5:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Wednesday 4:00 PM - 5:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Thursday 4:00 PM - 5:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Period 2: Cyber Security Essentials -->
+            <div class="period-section period2">
+                <div class="period-header">
+                    <div class="period-icon">P2</div>
+                    <div class="period-title">Period 2: Cyber Security Essentials</div>
+                    <div class="period-dates">August 25 - September 17, 2025</div>
+                </div>
+                
+                <div class="schedule-grid">
+                    <div class="subject-card">
+                        <div class="subject-code">NIT2102_SY_H2B2_IP</div>
+                        <div class="subject-name">Cyber Security Essentials</div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Monday 8:00 AM - 11:00 AM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Wednesday 8:00 AM - 11:00 AM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Friday 8:00 AM - 11:00 AM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Monday 11:00 AM - 12:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Wednesday 11:00 AM - 12:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Friday 11:00 AM - 12:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Period 3: Server Administration -->
+            <div class="period-section period3">
+                <div class="period-header">
+                    <div class="period-icon">P3</div>
+                    <div class="period-title">Period 3: Server Administration & Management</div>
+                    <div class="period-dates">September 29 - October 21, 2025</div>
+                </div>
+                
+                <div class="schedule-grid">
+                    <div class="subject-card">
+                        <div class="subject-code">NIT2122_SY_H2B3_IP</div>
+                        <div class="subject-name">Server Administration & Management</div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Monday 1:00 PM - 4:00 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Tuesday 1:00 PM - 4:00 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Thursday 1:00 PM - 4:00 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Monday 4:00 PM - 5:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Tuesday 4:00 PM - 5:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Thursday 4:00 PM - 5:00 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Period 4: Advanced Web Application Development -->
+            <div class="period-section period4">
+                <div class="period-header">
+                    <div class="period-icon">P4</div>
+                    <div class="period-title">Period 4: Advanced Web Application Development</div>
+                    <div class="period-dates">October 27 - November 18, 2025</div>
+                </div>
+                
+                <div class="schedule-grid">
+                    <div class="subject-card">
+                        <div class="subject-code">NIT3112_SY_H2B4_IP</div>
+                        <div class="subject-name">Advanced Web Application Development</div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Monday 5:30 PM - 8:30 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Tuesday 5:30 PM - 8:30 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item class-schedule">
+                            <span class="day-time">Thursday 5:30 PM - 8:30 PM</span>
+                            <span class="duration">3 hrs</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Monday 8:30 PM - 9:30 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Tuesday 8:30 PM - 9:30 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                        <div class="schedule-item lab-schedule">
+                            <span class="day-time">Thursday 8:30 PM - 9:30 PM</span>
+                            <span class="duration">PC Lab</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="availability-note">
+                <h3>🕐 My Availability for Meetings/Study Groups</h3>
+                <p>I'm generally available on weekends and during break periods between academic blocks. 
+                Feel free to reach out to schedule meetings during these times!</p>
+                <p><strong>Best contact times:</strong> Weekends, evenings after 9:30 PM (during Period 4), or between academic periods.</p>
+            </div>
         </div>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Subject</th>
-              <th>Activity</th>
-              <th>Day</th>
-              <th>Time</th>
-              <th>Campus / Location</th>
-              <th>Staff</th>
-              <th>Duration / Weeks</th>
-            </tr>
-          </thead>
-          <tbody id="a2-body">
-            <!-- Rows injected by script -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <small>Generated site • Put your PDF files in <code>assets/</code> and push to GitHub.</small>
     </div>
-  </footer>
-
-  <script src="./script.js"></script>
 </body>
 </html>
