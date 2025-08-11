@@ -145,82 +145,143 @@
 
         .class-block {
             margin-bottom: 12px;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid;
+            padding: 15px;
+            border-radius: 10px;
             font-size: 0.9em;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
+        .class-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Enhanced class styling with icons and better visual hierarchy */
         .oop-class {
-            background: #e8f5e8;
-            border-left-color: #27ae60;
+            background: linear-gradient(135deg, #e8f5e8, #d4f1d4);
+            border: 2px solid #27ae60;
+        }
+
+        .oop-class::before {
+            content: "💻";
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 1.2em;
         }
 
         .cyber-class {
-            background: #fef5e7;
-            border-left-color: #f39c12;
+            background: linear-gradient(135deg, #fef5e7, #fdeaa7);
+            border: 2px solid #f39c12;
+        }
+
+        .cyber-class::before {
+            content: "🔒";
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 1.2em;
         }
 
         .server-class {
-            background: #edf2ff;
-            border-left-color: #3498db;
+            background: linear-gradient(135deg, #edf2ff, #d6e4ff);
+            border: 2px solid #3498db;
+        }
+
+        .server-class::before {
+            content: "🖥️";
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 1.2em;
         }
 
         .web-class {
-            background: #f3e5f5;
-            border-left-color: #9b59b6;
+            background: linear-gradient(135deg, #f3e5f5, #e8d5eb);
+            border: 2px solid #9b59b6;
+        }
+
+        .web-class::before {
+            content: "🌐";
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 1.2em;
         }
 
         .class-time {
-            font-weight: 600;
+            font-weight: 700;
             color: #2c3e50;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            font-size: 1em;
         }
 
         .class-name {
-            font-size: 0.8em;
-            color: #7f8c8d;
-            margin-bottom: 4px;
+            font-size: 0.9em;
+            color: #34495e;
+            margin-bottom: 6px;
+            font-weight: 600;
         }
 
         .class-type {
-            font-size: 0.75em;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 2px 6px;
-            border-radius: 10px;
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, 0.9);
+            color: #7f8c8d;
+            padding: 4px 10px;
+            border-radius: 15px;
             display: inline-block;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .free-time {
             color: #27ae60;
             font-style: italic;
             text-align: center;
-            padding: 20px;
-            background: #f8fff8;
-            border-radius: 8px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #f8fff8, #e8f8e8);
+            border-radius: 10px;
             border: 2px dashed #27ae60;
+            font-weight: 600;
+            font-size: 1.1em;
         }
 
-        .legend {
+        /* Quick summary stats at the top */
+        .week-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin: 30px 0;
+            margin-bottom: 25px;
             padding: 20px;
-            background: #f8f9fa;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         }
 
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
+        .stat-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #2c3e50;
         }
 
         @media (max-width: 1200px) {
@@ -241,12 +302,49 @@
             .content {
                 padding: 20px;
             }
+
+            .week-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 480px) {
             .week-grid {
                 grid-template-columns: 1fr;
             }
+
+            .week-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tooltip for additional info */
+        .class-block[data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            z-index: 10;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .class-block[data-tooltip]:hover::before {
+            content: "";
+            position: absolute;
+            bottom: 92%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #2c3e50;
+            z-index: 10;
         }
     </style>
 </head>
@@ -258,24 +356,11 @@
         </div>
 
         <div class="content">
-
             <div class="navigation">
                 <button class="nav-btn active" onclick="showWeek('week1')">Week 1 (July 28)</button>
-                <button class="nav-btn" onclick="showWeek('week2')">Week 2 (Aug 4)</button>
-                <button class="nav-btn" onclick="showWeek('week3')">Week 3 (Aug 11)</button>
-                <button class="nav-btn" onclick="showWeek('week4')">Week 4 (Aug 18)</button>
                 <button class="nav-btn" onclick="showWeek('week5')">Week 5 (Aug 25)</button>
-                <button class="nav-btn" onclick="showWeek('week6')">Week 6 (Sep 1)</button>
-                <button class="nav-btn" onclick="showWeek('week7')">Week 7 (Sep 8)</button>
-                <button class="nav-btn" onclick="showWeek('week8')">Week 8 (Sep 15)</button>
                 <button class="nav-btn" onclick="showWeek('week9')">Week 9 (Sep 29)</button>
-                <button class="nav-btn" onclick="showWeek('week10')">Week 10 (Oct 6)</button>
-                <button class="nav-btn" onclick="showWeek('week11')">Week 11 (Oct 13)</button>
-                <button class="nav-btn" onclick="showWeek('week12')">Week 12 (Oct 20)</button>
                 <button class="nav-btn" onclick="showWeek('week13')">Week 13 (Oct 27)</button>
-                <button class="nav-btn" onclick="showWeek('week14')">Week 14 (Nov 3)</button>
-                <button class="nav-btn" onclick="showWeek('week15')">Week 15 (Nov 10)</button>
-                <button class="nav-btn" onclick="showWeek('week16')">Week 16 (Nov 17)</button>
             </div>
 
             <!-- Week 1: July 28 - Aug 3 -->
@@ -284,16 +369,40 @@
                     <div class="week-title">Object Oriented Programming</div>
                     <div class="week-dates">July 28 - August 3, 2025</div>
                 </div>
+
+                <div class="week-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-label">Class Hours</div>
+                        <div class="stat-value">12 hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">💻</div>
+                        <div class="stat-label">Lab Hours</div>
+                        <div class="stat-value">3 hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">✨</div>
+                        <div class="stat-label">Free Days</div>
+                        <div class="stat-value">4 days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">📖</div>
+                        <div class="stat-label">Subject Focus</div>
+                        <div class="stat-value">OOP</div>
+                    </div>
+                </div>
+
                 <div class="week-grid">
                     <div class="day-column">
                         <div class="day-header">Monday<div class="day-date">July 28</div></div>
                         <div class="day-content">
-                            <div class="class-block oop-class">
+                            <div class="class-block oop-class" data-tooltip="Room TBA - Bring laptop">
                                 <div class="class-time">1:00 PM - 4:00 PM</div>
                                 <div class="class-name">Object Oriented Programming</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block oop-class">
+                            <div class="class-block oop-class" data-tooltip="Hands-on coding session">
                                 <div class="class-time">4:00 PM - 5:00 PM</div>
                                 <div class="class-name">Object Oriented Programming</div>
                                 <div class="class-type">PC Lab</div>
@@ -309,12 +418,12 @@
                     <div class="day-column">
                         <div class="day-header">Wednesday<div class="day-date">July 30</div></div>
                         <div class="day-content">
-                            <div class="class-block oop-class">
+                            <div class="class-block oop-class" data-tooltip="Room TBA - Bring laptop">
                                 <div class="class-time">1:00 PM - 4:00 PM</div>
                                 <div class="class-name">Object Oriented Programming</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block oop-class">
+                            <div class="class-block oop-class" data-tooltip="Hands-on coding session">
                                 <div class="class-time">4:00 PM - 5:00 PM</div>
                                 <div class="class-name">Object Oriented Programming</div>
                                 <div class="class-type">PC Lab</div>
@@ -324,12 +433,12 @@
                     <div class="day-column">
                         <div class="day-header">Thursday<div class="day-date">July 31</div></div>
                         <div class="day-content">
-                            <div class="class-block oop-class">
+                            <div class="class-block oop-class" data-tooltip="Room TBA - Bring laptop">
                                 <div class="class-time">1:00 PM - 4:00 PM</div>
                                 <div class="class-name">Object Oriented Programming</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block oop-class">
+                            <div class="class-block oop-class" data-tooltip="Hands-on coding session">
                                 <div class="class-time">4:00 PM - 5:00 PM</div>
                                 <div class="class-name">Object Oriented Programming</div>
                                 <div class="class-type">PC Lab</div>
@@ -363,16 +472,40 @@
                     <div class="week-title">Week 5 - Cyber Security Essentials</div>
                     <div class="week-dates">August 25 - August 31, 2025</div>
                 </div>
+
+                <div class="week-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">🔒</div>
+                        <div class="stat-label">Security Hours</div>
+                        <div class="stat-value">9 hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">🛡️</div>
+                        <div class="stat-label">Lab Sessions</div>
+                        <div class="stat-value">3 sessions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">✨</div>
+                        <div class="stat-label">Free Days</div>
+                        <div class="stat-value">4 days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">📖</div>
+                        <div class="stat-label">Focus Area</div>
+                        <div class="stat-value">CyberSec</div>
+                    </div>
+                </div>
+
                 <div class="week-grid">
                     <div class="day-column">
                         <div class="day-header">Monday<div class="day-date">Aug 25</div></div>
                         <div class="day-content">
-                            <div class="class-block cyber-class">
+                            <div class="class-block cyber-class" data-tooltip="Network Security Fundamentals">
                                 <div class="class-time">8:00 AM - 11:00 AM</div>
                                 <div class="class-name">Cyber Security Essentials</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block cyber-class">
+                            <div class="class-block cyber-class" data-tooltip="Penetration testing lab">
                                 <div class="class-time">11:00 AM - 12:00 PM</div>
                                 <div class="class-name">Cyber Security Essentials</div>
                                 <div class="class-type">PC Lab</div>
@@ -388,12 +521,12 @@
                     <div class="day-column">
                         <div class="day-header">Wednesday<div class="day-date">Aug 27</div></div>
                         <div class="day-content">
-                            <div class="class-block cyber-class">
+                            <div class="class-block cyber-class" data-tooltip="Cryptography & Encryption">
                                 <div class="class-time">8:00 AM - 11:00 AM</div>
                                 <div class="class-name">Cyber Security Essentials</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block cyber-class">
+                            <div class="class-block cyber-class" data-tooltip="Security tools practice">
                                 <div class="class-time">11:00 AM - 12:00 PM</div>
                                 <div class="class-name">Cyber Security Essentials</div>
                                 <div class="class-type">PC Lab</div>
@@ -409,12 +542,12 @@
                     <div class="day-column">
                         <div class="day-header">Friday<div class="day-date">Aug 29</div></div>
                         <div class="day-content">
-                            <div class="class-block cyber-class">
+                            <div class="class-block cyber-class" data-tooltip="Incident Response & Forensics">
                                 <div class="class-time">8:00 AM - 11:00 AM</div>
                                 <div class="class-name">Cyber Security Essentials</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block cyber-class">
+                            <div class="class-block cyber-class" data-tooltip="Forensic analysis lab">
                                 <div class="class-time">11:00 AM - 12:00 PM</div>
                                 <div class="class-name">Cyber Security Essentials</div>
                                 <div class="class-type">PC Lab</div>
@@ -442,16 +575,40 @@
                     <div class="week-title">Week 9 - Server Administration & Management</div>
                     <div class="week-dates">September 29 - October 5, 2025</div>
                 </div>
+
+                <div class="week-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">🖥️</div>
+                        <div class="stat-label">Server Hours</div>
+                        <div class="stat-value">9 hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⚙️</div>
+                        <div class="stat-label">Lab Sessions</div>
+                        <div class="stat-value">3 sessions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">✨</div>
+                        <div class="stat-label">Free Days</div>
+                        <div class="stat-value">3 days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">📖</div>
+                        <div class="stat-label">Focus Area</div>
+                        <div class="stat-value">SysAdmin</div>
+                    </div>
+                </div>
+
                 <div class="week-grid">
                     <div class="day-column">
                         <div class="day-header">Monday<div class="day-date">Sep 29</div></div>
                         <div class="day-content">
-                            <div class="class-block server-class">
+                            <div class="class-block server-class" data-tooltip="Linux Server Management">
                                 <div class="class-time">1:00 PM - 4:00 PM</div>
                                 <div class="class-name">Server Administration</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block server-class">
+                            <div class="class-block server-class" data-tooltip="Command line practice">
                                 <div class="class-time">4:00 PM - 5:00 PM</div>
                                 <div class="class-name">Server Administration</div>
                                 <div class="class-type">PC Lab</div>
@@ -461,12 +618,12 @@
                     <div class="day-column">
                         <div class="day-header">Tuesday<div class="day-date">Sep 30</div></div>
                         <div class="day-content">
-                            <div class="class-block server-class">
+                            <div class="class-block server-class" data-tooltip="Windows Server 2022">
                                 <div class="class-time">1:00 PM - 4:00 PM</div>
                                 <div class="class-name">Server Administration</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block server-class">
+                            <div class="class-block server-class" data-tooltip="Active Directory setup">
                                 <div class="class-time">4:00 PM - 5:00 PM</div>
                                 <div class="class-name">Server Administration</div>
                                 <div class="class-type">PC Lab</div>
@@ -482,12 +639,12 @@
                     <div class="day-column">
                         <div class="day-header">Thursday<div class="day-date">Oct 2</div></div>
                         <div class="day-content">
-                            <div class="class-block server-class">
+                            <div class="class-block server-class" data-tooltip="Virtualization & Docker">
                                 <div class="class-time">1:00 PM - 4:00 PM</div>
                                 <div class="class-name">Server Administration</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block server-class">
+                            <div class="class-block server-class" data-tooltip="Container deployment">
                                 <div class="class-time">4:00 PM - 5:00 PM</div>
                                 <div class="class-name">Server Administration</div>
                                 <div class="class-type">PC Lab</div>
@@ -521,16 +678,40 @@
                     <div class="week-title">Week 13 - Advanced Web Application Development</div>
                     <div class="week-dates">October 27 - November 2, 2025</div>
                 </div>
+
+                <div class="week-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">🌐</div>
+                        <div class="stat-label">Web Dev Hours</div>
+                        <div class="stat-value">9 hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">💻</div>
+                        <div class="stat-label">Lab Sessions</div>
+                        <div class="stat-value">3 sessions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">🎃</div>
+                        <div class="stat-label">Halloween</div>
+                        <div class="stat-value">Free!</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">📖</div>
+                        <div class="stat-label">Focus Area</div>
+                        <div class="stat-value">WebDev</div>
+                    </div>
+                </div>
+
                 <div class="week-grid">
                     <div class="day-column">
                         <div class="day-header">Monday<div class="day-date">Oct 27</div></div>
                         <div class="day-content">
-                            <div class="class-block web-class">
+                            <div class="class-block web-class" data-tooltip="React & Node.js">
                                 <div class="class-time">5:30 PM - 8:30 PM</div>
                                 <div class="class-name">Advanced Web Development</div>
-                                <div class="class-type">Class</div>
+                                <div class="class-type">Lecture</div>
                             </div>
-                            <div class="class-block web-class">
+                            <div class="class-block web-class" data-tooltip="Full-stack project">
                                 <div class="class-time">8:30 PM - 9:30 PM</div>
                                 <div class="class-name">Advanced Web Development</div>
                                 <div class="class-type">PC Lab</div>
@@ -540,92 +721,3 @@
                     <div class="day-column">
                         <div class="day-header">Tuesday<div class="day-date">Oct 28</div></div>
                         <div class="day-content">
-                            <div class="class-block web-class">
-                                <div class="class-time">5:30 PM - 8:30 PM</div>
-                                <div class="class-name">Advanced Web Development</div>
-                                <div class="class-type">Class</div>
-                            </div>
-                            <div class="class-block web-class">
-                                <div class="class-time">8:30 PM - 9:30 PM</div>
-                                <div class="class-name">Advanced Web Development</div>
-                                <div class="class-type">PC Lab</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="day-column">
-                        <div class="day-header">Wednesday<div class="day-date">Oct 29</div></div>
-                        <div class="day-content">
-                            <div class="free-time">✨ Free Day<br>Available for meetings</div>
-                        </div>
-                    </div>
-                    <div class="day-column">
-                        <div class="day-header">Thursday<div class="day-date">Oct 30</div></div>
-                        <div class="day-content">
-                            <div class="class-block web-class">
-                                <div class="class-time">5:30 PM - 8:30 PM</div>
-                                <div class="class-name">Advanced Web Development</div>
-                                <div class="class-type">Class</div>
-                            </div>
-                            <div class="class-block web-class">
-                                <div class="class-time">8:30 PM - 9:30 PM</div>
-                                <div class="class-name">Advanced Web Development</div>
-                                <div class="class-type">PC Lab</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="day-column">
-                        <div class="day-header">Friday<div class="day-date">Oct 31</div></div>
-                        <div class="day-content">
-                            <div class="free-time">🎃 Halloween<br>Free Day!</div>
-                        </div>
-                    </div>
-                    <div class="day-column">
-                        <div class="day-header">Saturday<div class="day-date">Nov 1</div></div>
-                        <div class="day-content">
-                            <div class="free-time">🎉 Weekend<br>Fully Available</div>
-                        </div>
-                    </div>
-                    <div class="day-column">
-                        <div class="day-header">Sunday<div class="day-date">Nov 2</div></div>
-                        <div class="day-content">
-                            <div class="free-time">🎉 Weekend<br>Fully Available</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional weeks can be added here following the same pattern -->
-            <!-- For brevity, I'm showing key representative weeks -->
-            
-        </div>
-    </div>
-
-    <script>
-        function showWeek(weekId) {
-            // Hide all week sections
-            const weeks = document.querySelectorAll('.week-section');
-            weeks.forEach(week => {
-                week.classList.remove('active');
-            });
-
-            // Remove active class from all buttons
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected week
-            document.getElementById(weekId).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
-        }
-
-        // Auto-generate remaining weeks (simplified for demo)
-        document.addEventListener('DOMContentLoaded', function() {
-            // This would contain logic to generate all weeks
-            // For now, showing key weeks as examples
-        });
-    </script>
-</body>
-</html>
