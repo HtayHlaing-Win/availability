@@ -2040,16 +2040,26 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 </html>
 
-<h2 style="
-    font-size: 18px;
-    color: white;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #0078d4, #00aaff);
-    border-radius: 6px;
-    display: inline-block;
-">
-    Scan or Click to visit my GitHub Availability Pages site
-</h2>
+<!-- QR Codes Section -->
+<div style="display: flex; gap: 30px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-top: 30px;">
+    <!-- GitHub QR Code -->
+    <div style="text-align: center; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h3 style="margin-bottom: 15px; color: #0078d4; font-size: 16px;">🌐 GitHub Availability</h3>
+        <div id="qrcode-github"></div>
+        <a href="https://htayhlaing-win.github.io/availability/" target="_blank">
+            <button style="margin-top: 12px; padding: 8px 16px; font-size: 14px; background-color: #0078d4; color: white; border: none; border-radius: 6px; cursor: pointer;">Visit Site</button>
+        </a>
+    </div>
+
+    <!-- LinkedIn QR Code (positioned to the right) -->
+    <div style="text-align: center; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h3 style="margin-bottom: 15px; color: #0077b5; font-size: 16px;">💼 LinkedIn Profile</h3>
+        <div id="qrcode-linkedin"></div>
+        <a href="https://linkedin.com/in/htayhlaing-win" target="_blank">
+            <button style="margin-top: 12px; padding: 8px 16px; font-size: 14px; background-color: #0077b5; color: white; border: none; border-radius: 6px; cursor: pointer;">Connect</button>
+        </a>
+    </div>
+</div>
 
 
 <div id="qrcode"></div>
@@ -2072,28 +2082,26 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="qrcode.min.js"></script>
 
 <script>
-  // Replace with your actual link
-    var myURL = "https://htayhlaing-win.github.io/availability/";
-    new QRCode(document.getElementById("qrcode"), {
-        text: myURL,
+    // GitHub Availability QR Code
+    var githubURL = "https://htayhlaing-win.github.io/availability/";
+    new QRCode(document.getElementById("qrcode-github"), {
+        text: githubURL,
         width: 128,
         height: 128,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // LinkedIn Profile QR Code (positioned to the right)
+    var linkedinURL = "https://linkedin.com/in/htayhlaing-win";
+    new QRCode(document.getElementById("qrcode-linkedin"), {
+        text: linkedinURL,
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
 </script>
 
-<!-- linkedin Profile Qr Code-->
-<script>
-  // Replace with your actual link
-    var myURL = "http://linkedin.com/in/htayhlaing-win";
-    new QRCode(document.getElementById("qrcode"), {
-        text: myURL,
-        width: 128,
-        height: 128,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
-</script>
