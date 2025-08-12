@@ -459,6 +459,20 @@
                 <button class="nav-btn" onclick="showWeek('week15', this)">November 10 to November 16</button>
                 <button class="nav-btn" onclick="showWeek('week16', this)">November 17 to November 23</button>
             </div>
+            <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.9); border-radius: 10px;">
+            <div id="today-info" style="font-size: 18px; font-weight: 600; color: #2c3e50; margin-bottom: 10px;"></div>
+                <button id="today-btn" onclick="goToToday()" style="
+                    padding: 10px 20px;
+                    background: #e74c3c;
+                    color: white;
+                    border: none;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    ">📅 Go to Current Week
+                </button>
+            </div>
 
             <!-- Week 1: July 28 - Aug 3 -->
             <div class="week-section active" id="week1">
@@ -2002,7 +2016,7 @@
         </div>
     </div>
 
-    <script>
+<script>
 function showWeek(weekId, btn) {
     // Hide all week sections
     document.querySelectorAll('.week-section').forEach(function(section) {
@@ -2019,6 +2033,147 @@ function showWeek(weekId, btn) {
     // Add active to clicked button
     if (btn) btn.classList.add('active');
 }
+
+// Week date ranges
+const weekRanges = [
+    { id: 'week1', start: new Date('2025-07-28'), end: new Date('2025-08-03'), title: 'July 28 to Aug 3' },
+    { id: 'week2', start: new Date('2025-08-04'), end: new Date('2025-08-10'), title: 'August 4 to August 10' },
+    { id: 'week3', start: new Date('2025-08-11'), end: new Date('2025-08-17'), title: 'August 11 to August 17' },
+    { id: 'week4', start: new Date('2025-08-18'), end: new Date('2025-08-24'), title: 'August 18 to August 24' },
+    { id: 'week5', start: new Date('2025-08-25'), end: new Date('2025-08-31'), title: 'August 25 to August 31' },
+    { id: 'week6', start: new Date('2025-09-01'), end: new Date('2025-09-07'), title: 'September 1 to September 7' },
+    { id: 'week7', start: new Date('2025-09-08'), end: new Date('2025-09-14'), title: 'September 8 to September 14' },
+    { id: 'week8', start: new Date('2025-09-15'), end: new Date('2025-09-21'), title: 'September 15 to September 21' },
+    { id: 'week9', start: new Date('2025-09-29'), end: new Date('2025-10-05'), title: 'September 29 to October 5' },
+    { id: 'week10', start: new Date('2025-10-06'), end: new Date('2025-10-12'), title: 'October 6 to October 12' },
+    { id: 'week11', start: new Date('2025-10-13'), end: new Date('2025-10-19'), title: 'October 13 to October 19' },
+    { id: 'week12', start: new Date('2025-10-20'), end: new Date('2025-10-26'), title: 'October 20 to October 26' },
+    { id: 'week13', start: new Date('2025-10-27'), end: new Date('2025-11-02'), title: 'October 27 to November 2' },
+    { id: 'week14', start: new Date('2025-11-03'), end: new Date('2025-11-09'), title: 'November 3 to November 9' },
+    { id: 'week15', start: new Date('2025-11-10'), end: new Date('2025-11-16'), title: 'November 10 to November 16' },
+    { id: 'week16', start: new Date('2025-11-17'), end: new Date('2025-11-23'), title: 'November 17 to November 23' }
+];
+
+function getCurrentWeek() {
+    const today = new Date();
+    
+    for (let i = 0; i < weekRanges.length; i++) {
+        if (today >= weekRanges[i].start && today <= weekRanges[i].end) {
+            return weekRanges[i];
+        }
+    }
+    
+    // If today is before the first week
+    if (today < weekRanges[0].start) {
+        return { id: 'week1', title: weekRanges[0].title, status: 'upcoming' };
+    }
+    
+    // If today is after the last week
+    if (today > weekRanges[weekRanges.length - 1].end) {
+        return { id: 'week16', title: weekRanges[weekRanges.length - 1].title, status: 'completed' };
+    }
+    
+    return null;
+}
+
+function goToToday() {
+    const currentWeek = getCurrentWeek();
+    if (currentWeek) {
+        // Find and click the corresponding navigation button
+        const navButtons = document.querySelectorAll('.nav-btn');
+        navButtons.forEach(function(btn) {
+            if (btn.textContent.trim() === currentWeek.title) {
+                btn.click();
+                btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+}
+
+function updateTodayInfo() {
+    const today = new Date();
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    
+    const todayString = today.toLocaleDateString('en-US', options);
+    const currentWeek = getCurrentWeek();
+    
+    let statusText = '';
+    let statusColor = '#2c3e50';
+    
+    if (currentWeek) {
+        if (currentWeek.status === 'upcoming') {
+            statusText = ` - Classes haven't started yet`;
+            statusColor = '#f39c12';
+        } else if (currentWeek.status === 'completed') {
+            statusText = ` - Semester completed`;
+            statusColor = '#27ae60';
+        } else {
+            statusText = ` - Current week: ${currentWeek.title}`;
+            statusColor = '#e74c3c';
+        }
+    }
+    
+    document.getElementById('today-info').innerHTML = 
+        `📅 Today is ${todayString}<br><span style="color: ${statusColor}; font-size: 14px;">${statusText}</span>`;
+}
+
+// Auto-activate current week on page load
+function autoActivateCurrentWeek() {
+    const currentWeek = getCurrentWeek();
+    if (currentWeek) {
+        // Remove active from week1 by default
+        document.querySelectorAll('.week-section').forEach(function(section) {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.nav-btn').forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+        
+        // Activate current week
+        const weekElement = document.getElementById(currentWeek.id);
+        if (weekElement) {
+            weekElement.classList.add('active');
+        }
+        
+        // Activate corresponding button
+        const navButtons = document.querySelectorAll('.nav-btn');
+        navButtons.forEach(function(btn) {
+            if (btn.textContent.trim() === currentWeek.title) {
+                btn.classList.add('active');
+            }
+        });
+    }
+}
+
+// Dark mode toggle logic
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('darkModeToggle');
+    toggleBtn.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        if(document.body.classList.contains('dark-mode')) {
+            toggleBtn.textContent = '☀️ Light Mode';
+            toggleBtn.style.background = '#f1c40f';
+            toggleBtn.style.color = '#232526';
+        } else {
+            toggleBtn.textContent = '🌙 Dark Mode';
+            toggleBtn.style.background = '#232526';
+            toggleBtn.style.color = '#fff';
+        }
+    });
+    
+    // Initialize today info and auto-activate current week
+    updateTodayInfo();
+    autoActivateCurrentWeek();
+    
+    // Update today info every minute
+    setInterval(updateTodayInfo, 60000);
+});
+
 
 // Dark mode toggle logic
 document.addEventListener('DOMContentLoaded', function() {
