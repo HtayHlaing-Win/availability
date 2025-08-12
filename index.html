@@ -2040,8 +2040,28 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 </html>
 
-<!-- Somewhere in your content -->
-<h2 style="font-size: 18px;">Scan or Click to visit my GitHub Availability Pages site</h2>
+<style>
+.qr-title {
+    font-size: 18px;
+    font-weight: normal;
+    text-align: center; /* Optional: center it */
+    position: relative;
+    display: inline-block;
+    padding-bottom: 6px;
+}
+.qr-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: #0078d4; /* same blue as button */
+    margin: 6px auto 0;
+    border-radius: 2px;
+}
+</style>
+
+<h2 class="qr-title">Scan or Click to visit my GitHub Availability Pages site</h2>
+
 <div id="qrcode"></div>
 <!-- Visit Site Button -->
 <a href="https://htayhlaing-win.github.io/availability/" target="_blank">
