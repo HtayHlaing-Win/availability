@@ -2321,6 +2321,10 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleBtn.style.color = '#fff';
         }
     });
+    // 🔹 Hide everything first
+    document.querySelectorAll('.week-section').forEach(function(section) {
+        section.style.display = 'none';
+    });
     
     // Initialize: hide past weeks, update today info, and auto-activate current week
     hidePastWeeks();
