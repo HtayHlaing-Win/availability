@@ -2137,13 +2137,12 @@ function showWeek(weekId, btn) {
         week.classList.add('active');
         week.style.display = 'block';  // Ensure visible on click
     }
+    // Remove active from all buttons
+    document.querySelectorAll('.nav-btn').forEach(function(b) {
+        b.classList.remove('active');
+    });
     // Add active to clicked button
     if (btn) btn.classList.add('active');
-    // Hide all week sections
-    document.querySelectorAll('.week-section').forEach(function(section) {
-        section.style.display = 'none';  // Actually hide the DOM element
-        section.classList.remove('active');
-    });
 }
 
 // Week date ranges
