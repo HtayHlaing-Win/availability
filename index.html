@@ -2189,36 +2189,32 @@ function getCurrentWeek() {
 
 function hidePastWeeks() {
     const today = new Date();
-    
+    const currentWeek = getCurrentWeek()?.id;
+
+    weekRanges.forEach(function(week) {
+        const weekElement = document.getElementById(week.id);
+        if (weekElement) {
+            if (today > week.end) {
+                weekElement.style.display = 'none'; // past weeks hidden
+            } else if (week.id !== currentWeek) {
+                weekElement.style.display = 'none'; // hide others until clicked
+            } else {
+                weekElement.style.display = 'block'; // show current week
+            }
+        }
+    });
+
     // Hide navigation buttons for past weeks
-    const navButtons = document.querySelectorAll('.nav-btn');
-    navButtons.forEach(function(btn) {
-        const btnText = btn.textContent.trim();
-        
-        // Find corresponding week
-        const week = weekRanges.find(w => w.title === btnText);
+    document.querySelectorAll('.nav-btn').forEach(function(btn) {
+        const week = weekRanges.find(w => w.title === btn.textContent.trim());
         if (week && today > week.end) {
             btn.style.display = 'none';
         } else {
             btn.style.display = 'inline-block';
         }
     });
-    
-    // Hide week sections for past weeks
-    weekRanges.forEach(function(week) {
-        if (today > week.end) {
-            const weekElement = document.getElementById(week.id);
-            if (weekElement) {
-                weekElement.style.display = 'none';
-            }
-        } else {
-            const weekElement = document.getElementById(week.id);
-            if (weekElement) {
-                weekElement.style.display = 'block';
-            }
-        }
-    });
 }
+
 
 function goToToday() {
     const currentWeek = getCurrentWeek();
