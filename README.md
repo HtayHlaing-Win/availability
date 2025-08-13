@@ -9,3 +9,5 @@ My schedule availability for Work
 - **AI Assistance**:
   - [Claude AI](https://www.anthropic.com/index/claude) – for code help and writing support.
   - [ChatGPT](https://chat.openai.com) – for brainstorming and content suggestions.
+=======
+
